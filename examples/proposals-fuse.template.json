@@ -1,0 +1,56 @@
+{
+  "goal": "Design an explanation of the fixture policies",
+  "context": "Read only the synthetic examples/fixture documentation.",
+  "scope": "examples/fixture only; no edits",
+  "baseline": "REPLACE_WITH_VERIFIED_COMMIT",
+  "integration": "Main resolves contradictions, preserves provenance and checks the new explanation against both fixture files.",
+  "access": "read-only",
+  "controls": {
+    "adversarial": false,
+    "iterate": false
+  },
+  "limits": {
+    "maxConcurrent": 2,
+    "maxCalls": 3,
+    "maxRounds": 1,
+    "maxItems": 2
+  },
+  "profiles": {
+    "worker": {
+      "model": "REPLACE_WITH_AVAILABLE_WORKER_MODEL",
+      "effort": "high"
+    },
+    "verifier": {
+      "model": "REPLACE_WITH_AVAILABLE_VERIFIER_MODEL",
+      "effort": "high"
+    },
+    "judge": {
+      "model": "REPLACE_WITH_AVAILABLE_JUDGE_MODEL",
+      "effort": "high"
+    }
+  },
+  "pattern": "proposals",
+  "terminal": "fuse",
+  "rubric": [
+    {
+      "id": "correctness",
+      "acceptance": "Correctly explains retries, attempts, timeout and deadline with file evidence"
+    },
+    {
+      "id": "clarity",
+      "acceptance": "A beginner can distinguish both retry and timeout concepts"
+    }
+  ],
+  "items": [
+    {
+      "id": "examples",
+      "task": "Draft a concrete examples-first explanation using both fixture files",
+      "acceptance": "Meet the shared rubric and cite both files"
+    },
+    {
+      "id": "definitions",
+      "task": "Draft a definitions-first explanation using both fixture files",
+      "acceptance": "Meet the shared rubric and cite both files"
+    }
+  ]
+}

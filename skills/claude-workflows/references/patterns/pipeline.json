@@ -1,0 +1,25 @@
+{
+  "id": "pipeline",
+  "title": "Pipeline",
+  "kind": "structure",
+  "order": 30,
+  "summary": "Fixed dependent stages run in order.",
+  "useWhen": [
+    "Later work needs an earlier result.",
+    "Stage boundaries provide useful gates or reuse."
+  ],
+  "avoidWhen": [
+    "One agent already holds the whole task and scripting adds no value."
+  ],
+  "contract": [
+    "Pass checked earlier outputs explicitly.",
+    "Stop dependent stages when a required gate fails.",
+    "Use adversarial verification when a gate must be independently checked; otherwise outputs remain claims."
+  ],
+  "example": "Inspect a migration, propose a change, then review the proposal in separate dependent stages.",
+  "executor": "agent-deployment",
+  "configuration": {
+    "pattern": "pipeline"
+  },
+  "diagram": "flowchart LR\n  A[Inspect] --> G[Gate]\n  G --> B[Propose]\n  B --> H[Gate]\n  H --> C[Review]"
+}

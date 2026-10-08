@@ -1,0 +1,26 @@
+{
+  "id": "independent-proposals",
+  "title": "Independent proposals",
+  "kind": "structure",
+  "order": 50,
+  "summary": "Separate agents explore genuinely different approaches to one decision.",
+  "useWhen": [
+    "An ambiguous plan benefits from independent alternatives.",
+    "No single decisive source settles the choice."
+  ],
+  "avoidWhen": [
+    "Drafts merely repeat one approach.",
+    "A simple test resolves the uncertainty."
+  ],
+  "contract": [
+    "Fix shared requirements before drafting.",
+    "Do not supply sibling outputs to drafters.",
+    "Choose select, fuse or a narrow compact-answer vote as the terminal."
+  ],
+  "example": "Compare two API designs against requirements fixed before drafting.",
+  "executor": "agent-deployment",
+  "configuration": {
+    "pattern": "proposals"
+  },
+  "diagram": "flowchart TD\n  Q[Common requirements] --> A[Approach A]\n  Q --> B[Approach B]\n  A --> J[Select / fuse / vote]\n  B --> J\n  J --> V[Fresh acceptance]"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "adversarial",
+  "title": "Adversarial verification",
+  "kind": "control",
+  "order": 70,
+  "summary": "A separate invocation tries to falsify a candidate.",
+  "useWhen": [
+    "Claims need reproduction, counterexamples or source checks.",
+    "A quality gate warrants an independent check."
+  ],
+  "avoidWhen": [
+    "The reviewer cannot access the relevant artifacts or evidence.",
+    "A rhetorical disagreement is treated as validation."
+  ],
+  "contract": [
+    "Verify actual artifacts against acceptance.",
+    "Report passed, failed or inconclusive with evidence.",
+    "Same-model invocations can share failure modes."
+  ],
+  "example": "Try to reproduce each reported authentication bypass before accepting it.",
+  "executor": "agent-deployment",
+  "configuration": {
+    "controls": {
+      "adversarial": true,
+      "iterate": false
+    }
+  },
+  "diagram": "flowchart LR\n  W[Candidate] --> V[Independent verifier]\n  V --> P[Passed]\n  V --> F[Failed / inconclusive]"
+}

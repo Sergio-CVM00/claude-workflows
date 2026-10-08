@@ -1,0 +1,27 @@
+{
+  "id": "fleet",
+  "title": "Fleet",
+  "kind": "structure",
+  "order": 40,
+  "summary": "A known inventory is partitioned into independent units.",
+  "useWhen": [
+    "Units and ownership are known before launch.",
+    "Independent work exceeds its aggregation overhead."
+  ],
+  "avoidWhen": [
+    "Workers edit the same shared files.",
+    "Integration dominates useful work."
+  ],
+  "contract": [
+    "Define stable IDs and aggregation before fan-out.",
+    "Bound concurrency and logical calls.",
+    "Preserve missing results and reconcile every ID.",
+    "Isolate parallel edits in worktrees and verify globally after integration."
+  ],
+  "example": "Audit three independent route groups, then reconcile every route and reproduce findings.",
+  "executor": "agent-deployment",
+  "configuration": {
+    "pattern": "fleet"
+  },
+  "diagram": "flowchart TD\n  K[Known inventory] --> A[Unit A]\n  K --> B[Unit B]\n  K --> C[Unit C]\n  A --> R[Reconcile all IDs]\n  B --> R\n  C --> R\n  R --> V[Global acceptance]"
+}
