@@ -1,0 +1,29 @@
+{
+  "id": "bounded-iteration",
+  "title": "Bounded iteration",
+  "kind": "control",
+  "order": 80,
+  "summary": "Repair against external feedback within explicit limits.",
+  "useWhen": [
+    "An external rubric or check can identify improvement.",
+    "Focused repairs can address stable failing checks."
+  ],
+  "avoidWhen": [
+    "No useful acceptance or progress indicator exists.",
+    "Self-approval replaces external evidence."
+  ],
+  "contract": [
+    "Requires adversarial verification in the bundled executor.",
+    "Set maximum rounds and calls before launch.",
+    "Stop on acceptance, repeated failing check IDs or the ceiling."
+  ],
+  "example": "Repair a unit for at most two rounds and stop if the same external failure repeats.",
+  "executor": "agent-deployment",
+  "configuration": {
+    "controls": {
+      "adversarial": true,
+      "iterate": true
+    }
+  },
+  "diagram": "flowchart LR\n  W[Work] --> E[External evaluation]\n  E -->|Pass| D[Done]\n  E -->|Fail within limit| R[Focused repair]\n  R --> E\n  E -->|Repeated / limit| S[Stop]"
+}

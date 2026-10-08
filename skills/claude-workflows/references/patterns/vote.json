@@ -1,0 +1,29 @@
+{
+  "id": "vote",
+  "title": "Vote on a compact answer",
+  "kind": "terminal",
+  "order": 110,
+  "summary": "Count exact compact answers using a strict majority.",
+  "useWhen": [
+    "The output is one exact, narrow answer.",
+    "Each candidate has independent supporting evidence."
+  ],
+  "avoidWhen": [
+    "The output is code, architecture or a preference.",
+    "Agreement is treated as truth."
+  ],
+  "contract": [
+    "Use compactAnswer=true; no proposal rubric.",
+    "Require a nonempty single-line answer of at most 256 characters.",
+    "A strict majority is required; ties stay unresolved.",
+    "Verify the winning answer separately."
+  ],
+  "example": "Compare independently derived exact identifiers, then verify the majority identifier against the primary source.",
+  "executor": "agent-deployment",
+  "configuration": {
+    "pattern": "proposals",
+    "terminal": "vote",
+    "compactAnswer": true
+  },
+  "diagram": "flowchart LR\n  A[Exact answers] --> M{Strict majority?}\n  M -->|Yes| V[Verify answer]\n  M -->|No| U[Unresolved]"
+}

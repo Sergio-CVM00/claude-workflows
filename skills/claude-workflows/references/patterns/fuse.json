@@ -1,0 +1,28 @@
+{
+  "id": "fuse",
+  "title": "Fuse complementary proposals",
+  "kind": "terminal",
+  "order": 100,
+  "summary": "Create a new synthesis from compatible, attributed elements.",
+  "useWhen": [
+    "Different approaches contain useful complementary elements.",
+    "Contradictions can be resolved explicitly."
+  ],
+  "avoidWhen": [
+    "Combining incompatible assumptions hides a decision.",
+    "Concatenation is mistaken for synthesis."
+  ],
+  "contract": [
+    "Fix the rubric before drafting and retain complete scorecards.",
+    "Track provenance and explain rejected elements.",
+    "Resolve unknowns and contradictions in main-session acceptance.",
+    "A fusion is a new artifact; prior candidate checks do not validate it."
+  ],
+  "example": "Combine a simple public API with another proposal's failure-handling strategy, then test the combined design.",
+  "executor": "agent-deployment",
+  "configuration": {
+    "pattern": "proposals",
+    "terminal": "fuse"
+  },
+  "diagram": "flowchart TD\n  A[Proposal A] --> F[Attributed synthesis]\n  B[Proposal B] --> F\n  F --> C[Resolve contradictions]\n  C --> V[Fresh acceptance]"
+}

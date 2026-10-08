@@ -1,0 +1,26 @@
+{
+  "id": "dynamic",
+  "title": "Dynamic orchestrator-workers",
+  "kind": "structure",
+  "order": 60,
+  "summary": "Discover genuinely unknown subtasks before bounded delegation.",
+  "useWhen": [
+    "A read-only investigation must identify the inventory.",
+    "The inventory cannot usefully be specified beforehand."
+  ],
+  "avoidWhen": [
+    "Items are already known.",
+    "Open-ended branching lacks a scope or ceiling."
+  ],
+  "contract": [
+    "Discover the complete in-scope inventory with stable IDs.",
+    "If inventory exceeds the selected ceiling, retain it and launch no workers.",
+    "Reconcile every discovered item and integrate in the main session."
+  ],
+  "example": "Discover undocumented adapters within one module, then audit each adapter within the selected limit.",
+  "executor": "agent-deployment",
+  "configuration": {
+    "pattern": "dynamic"
+  },
+  "diagram": "flowchart TD\n  D[Bounded discovery] --> G{Within limit?}\n  G -->|No| S[Stop and retain inventory]\n  G -->|Yes| W[Independent workers]\n  W --> R[Reconcile]\n  R --> V[Acceptance]"
+}

@@ -1,0 +1,297 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "id": "main-session",
+      "title": "Main session",
+      "kind": "baseline",
+      "order": 10,
+      "summary": "One agent owns the task and acceptance.",
+      "useWhen": [
+        "The task is small or tightly coupled.",
+        "One decisive source or test can resolve it."
+      ],
+      "avoidWhen": [
+        "Independent evidence needs isolation beyond a useful single context."
+      ],
+      "contract": [
+        "State the deliverable and verify it.",
+        "No delegation call is needed."
+      ],
+      "example": "Fix one documentation typo and check the surrounding instructions.",
+      "executor": "main-session",
+      "configuration": {},
+      "diagram": "flowchart LR\n  T[Task] --> M[Main agent]\n  M --> V[Acceptance]\n  V --> R[Result]"
+    },
+    {
+      "id": "ordinary-subagents",
+      "title": "A few ordinary subagents",
+      "kind": "mode",
+      "order": 20,
+      "summary": "The main conversation coordinates a few independent assignments.",
+      "useWhen": [
+        "A few small tasks have separate evidence or ownership.",
+        "Saving a script provides no useful reuse."
+      ],
+      "avoidWhen": [
+        "Many intermediate results overwhelm conversational coordination.",
+        "Assignments depend on shared mutable state."
+      ],
+      "contract": [
+        "Give each worker a self-contained brief and acceptance.",
+        "The main agent reconciles all assignments and integrates."
+      ],
+      "example": "Check two unrelated configuration files against their official documentation.",
+      "executor": "ordinary-subagents",
+      "configuration": {},
+      "diagram": "flowchart TD\n  M[Main agent] --> A[Config reader A]\n  M --> B[Config reader B]\n  A --> I[Main integration]\n  B --> I\n  I --> V[Acceptance]"
+    },
+    {
+      "id": "pipeline",
+      "title": "Pipeline",
+      "kind": "structure",
+      "order": 30,
+      "summary": "Fixed dependent stages run in order.",
+      "useWhen": [
+        "Later work needs an earlier result.",
+        "Stage boundaries provide useful gates or reuse."
+      ],
+      "avoidWhen": [
+        "One agent already holds the whole task and scripting adds no value."
+      ],
+      "contract": [
+        "Pass checked earlier outputs explicitly.",
+        "Stop dependent stages when a required gate fails.",
+        "Use adversarial verification when a gate must be independently checked; otherwise outputs remain claims."
+      ],
+      "example": "Inspect a migration, propose a change, then review the proposal in separate dependent stages.",
+      "executor": "agent-deployment",
+      "configuration": {
+        "pattern": "pipeline"
+      },
+      "diagram": "flowchart LR\n  A[Inspect] --> G[Gate]\n  G --> B[Propose]\n  B --> H[Gate]\n  H --> C[Review]"
+    },
+    {
+      "id": "fleet",
+      "title": "Fleet",
+      "kind": "structure",
+      "order": 40,
+      "summary": "A known inventory is partitioned into independent units.",
+      "useWhen": [
+        "Units and ownership are known before launch.",
+        "Independent work exceeds its aggregation overhead."
+      ],
+      "avoidWhen": [
+        "Workers edit the same shared files.",
+        "Integration dominates useful work."
+      ],
+      "contract": [
+        "Define stable IDs and aggregation before fan-out.",
+        "Bound concurrency and logical calls.",
+        "Preserve missing results and reconcile every ID.",
+        "Isolate parallel edits in worktrees and verify globally after integration."
+      ],
+      "example": "Audit three independent route groups, then reconcile every route and reproduce findings.",
+      "executor": "agent-deployment",
+      "configuration": {
+        "pattern": "fleet"
+      },
+      "diagram": "flowchart TD\n  K[Known inventory] --> A[Unit A]\n  K --> B[Unit B]\n  K --> C[Unit C]\n  A --> R[Reconcile all IDs]\n  B --> R\n  C --> R\n  R --> V[Global acceptance]"
+    },
+    {
+      "id": "independent-proposals",
+      "title": "Independent proposals",
+      "kind": "structure",
+      "order": 50,
+      "summary": "Separate agents explore genuinely different approaches to one decision.",
+      "useWhen": [
+        "An ambiguous plan benefits from independent alternatives.",
+        "No single decisive source settles the choice."
+      ],
+      "avoidWhen": [
+        "Drafts merely repeat one approach.",
+        "A simple test resolves the uncertainty."
+      ],
+      "contract": [
+        "Fix shared requirements before drafting.",
+        "Do not supply sibling outputs to drafters.",
+        "Choose select, fuse or a narrow compact-answer vote as the terminal."
+      ],
+      "example": "Compare two API designs against requirements fixed before drafting.",
+      "executor": "agent-deployment",
+      "configuration": {
+        "pattern": "proposals"
+      },
+      "diagram": "flowchart TD\n  Q[Common requirements] --> A[Approach A]\n  Q --> B[Approach B]\n  A --> J[Select / fuse / vote]\n  B --> J\n  J --> V[Fresh acceptance]"
+    },
+    {
+      "id": "dynamic",
+      "title": "Dynamic orchestrator-workers",
+      "kind": "structure",
+      "order": 60,
+      "summary": "Discover genuinely unknown subtasks before bounded delegation.",
+      "useWhen": [
+        "A read-only investigation must identify the inventory.",
+        "The inventory cannot usefully be specified beforehand."
+      ],
+      "avoidWhen": [
+        "Items are already known.",
+        "Open-ended branching lacks a scope or ceiling."
+      ],
+      "contract": [
+        "Discover the complete in-scope inventory with stable IDs.",
+        "If inventory exceeds the selected ceiling, retain it and launch no workers.",
+        "Reconcile every discovered item and integrate in the main session."
+      ],
+      "example": "Discover undocumented adapters within one module, then audit each adapter within the selected limit.",
+      "executor": "agent-deployment",
+      "configuration": {
+        "pattern": "dynamic"
+      },
+      "diagram": "flowchart TD\n  D[Bounded discovery] --> G{Within limit?}\n  G -->|No| S[Stop and retain inventory]\n  G -->|Yes| W[Independent workers]\n  W --> R[Reconcile]\n  R --> V[Acceptance]"
+    },
+    {
+      "id": "adversarial",
+      "title": "Adversarial verification",
+      "kind": "control",
+      "order": 70,
+      "summary": "A separate invocation tries to falsify a candidate.",
+      "useWhen": [
+        "Claims need reproduction, counterexamples or source checks.",
+        "A quality gate warrants an independent check."
+      ],
+      "avoidWhen": [
+        "The reviewer cannot access the relevant artifacts or evidence.",
+        "A rhetorical disagreement is treated as validation."
+      ],
+      "contract": [
+        "Verify actual artifacts against acceptance.",
+        "Report passed, failed or inconclusive with evidence.",
+        "Same-model invocations can share failure modes."
+      ],
+      "example": "Try to reproduce each reported authentication bypass before accepting it.",
+      "executor": "agent-deployment",
+      "configuration": {
+        "controls": {
+          "adversarial": true,
+          "iterate": false
+        }
+      },
+      "diagram": "flowchart LR\n  W[Candidate] --> V[Independent verifier]\n  V --> P[Passed]\n  V --> F[Failed / inconclusive]"
+    },
+    {
+      "id": "bounded-iteration",
+      "title": "Bounded iteration",
+      "kind": "control",
+      "order": 80,
+      "summary": "Repair against external feedback within explicit limits.",
+      "useWhen": [
+        "An external rubric or check can identify improvement.",
+        "Focused repairs can address stable failing checks."
+      ],
+      "avoidWhen": [
+        "No useful acceptance or progress indicator exists.",
+        "Self-approval replaces external evidence."
+      ],
+      "contract": [
+        "Requires adversarial verification in the bundled executor.",
+        "Set maximum rounds and calls before launch.",
+        "Stop on acceptance, repeated failing check IDs or the ceiling."
+      ],
+      "example": "Repair a unit for at most two rounds and stop if the same external failure repeats.",
+      "executor": "agent-deployment",
+      "configuration": {
+        "controls": {
+          "adversarial": true,
+          "iterate": true
+        }
+      },
+      "diagram": "flowchart LR\n  W[Work] --> E[External evaluation]\n  E -->|Pass| D[Done]\n  E -->|Fail within limit| R[Focused repair]\n  R --> E\n  E -->|Repeated / limit| S[Stop]"
+    },
+    {
+      "id": "select",
+      "title": "Select one proposal",
+      "kind": "terminal",
+      "order": 90,
+      "summary": "Retain one qualifying candidate intact.",
+      "useWhen": [
+        "One approach should own the final artifact.",
+        "A fixed rubric distinguishes viable options."
+      ],
+      "avoidWhen": [
+        "No candidate meets the acceptance criteria.",
+        "A new combined artifact is actually needed."
+      ],
+      "contract": [
+        "Fix the rubric before drafting.",
+        "Assess every candidate and criterion with evidence.",
+        "Select exactly one existing ID; all its rubric verdicts must pass.",
+        "Judge claims still require actual acceptance checks."
+      ],
+      "example": "Choose one API proposal that satisfies every fixed acceptance criterion.",
+      "executor": "agent-deployment",
+      "configuration": {
+        "pattern": "proposals",
+        "terminal": "select"
+      },
+      "diagram": "flowchart TD\n  A[Proposal A] --> J[Fixed rubric]\n  B[Proposal B] --> J\n  J --> S[One intact proposal]\n  S --> V[Acceptance]"
+    },
+    {
+      "id": "fuse",
+      "title": "Fuse complementary proposals",
+      "kind": "terminal",
+      "order": 100,
+      "summary": "Create a new synthesis from compatible, attributed elements.",
+      "useWhen": [
+        "Different approaches contain useful complementary elements.",
+        "Contradictions can be resolved explicitly."
+      ],
+      "avoidWhen": [
+        "Combining incompatible assumptions hides a decision.",
+        "Concatenation is mistaken for synthesis."
+      ],
+      "contract": [
+        "Fix the rubric before drafting and retain complete scorecards.",
+        "Track provenance and explain rejected elements.",
+        "Resolve unknowns and contradictions in main-session acceptance.",
+        "A fusion is a new artifact; prior candidate checks do not validate it."
+      ],
+      "example": "Combine a simple public API with another proposal's failure-handling strategy, then test the combined design.",
+      "executor": "agent-deployment",
+      "configuration": {
+        "pattern": "proposals",
+        "terminal": "fuse"
+      },
+      "diagram": "flowchart TD\n  A[Proposal A] --> F[Attributed synthesis]\n  B[Proposal B] --> F\n  F --> C[Resolve contradictions]\n  C --> V[Fresh acceptance]"
+    },
+    {
+      "id": "vote",
+      "title": "Vote on a compact answer",
+      "kind": "terminal",
+      "order": 110,
+      "summary": "Count exact compact answers using a strict majority.",
+      "useWhen": [
+        "The output is one exact, narrow answer.",
+        "Each candidate has independent supporting evidence."
+      ],
+      "avoidWhen": [
+        "The output is code, architecture or a preference.",
+        "Agreement is treated as truth."
+      ],
+      "contract": [
+        "Use compactAnswer=true; no proposal rubric.",
+        "Require a nonempty single-line answer of at most 256 characters.",
+        "A strict majority is required; ties stay unresolved.",
+        "Verify the winning answer separately."
+      ],
+      "example": "Compare independently derived exact identifiers, then verify the majority identifier against the primary source.",
+      "executor": "agent-deployment",
+      "configuration": {
+        "pattern": "proposals",
+        "terminal": "vote",
+        "compactAnswer": true
+      },
+      "diagram": "flowchart LR\n  A[Exact answers] --> M{Strict majority?}\n  M -->|Yes| V[Verify answer]\n  M -->|No| U[Unresolved]"
+    }
+  ]
+}

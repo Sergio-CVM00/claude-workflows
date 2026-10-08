@@ -1,0 +1,22 @@
+{
+  "id": "main-session",
+  "title": "Main session",
+  "kind": "baseline",
+  "order": 10,
+  "summary": "One agent owns the task and acceptance.",
+  "useWhen": [
+    "The task is small or tightly coupled.",
+    "One decisive source or test can resolve it."
+  ],
+  "avoidWhen": [
+    "Independent evidence needs isolation beyond a useful single context."
+  ],
+  "contract": [
+    "State the deliverable and verify it.",
+    "No delegation call is needed."
+  ],
+  "example": "Fix one documentation typo and check the surrounding instructions.",
+  "executor": "main-session",
+  "configuration": {},
+  "diagram": "flowchart LR\n  T[Task] --> M[Main agent]\n  M --> V[Acceptance]\n  V --> R[Result]"
+}

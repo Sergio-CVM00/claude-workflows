@@ -1,0 +1,23 @@
+{
+  "name": "claude-workflows",
+  "version": "0.1.0-preview.1",
+  "description": "Choose the simplest useful Claude Code deployment, then execute a selected bounded workflow.",
+  "author": {
+    "name": "Sergio Cabeza",
+    "url": "https://github.com/Sergio-CVM00"
+  },
+  "homepage": "https://github.com/Sergio-CVM00/claude-workflows",
+  "repository": "https://github.com/Sergio-CVM00/claude-workflows",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "workflows",
+    "skills",
+    "multi-agent",
+    "orchestration"
+  ],
+  "skills": [
+    "./skills/claude-workflows"
+  ],
+  "workflows": "./skills/claude-workflows/workflows"
+}

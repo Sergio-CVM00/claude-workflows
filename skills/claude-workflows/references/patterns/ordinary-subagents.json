@@ -1,0 +1,23 @@
+{
+  "id": "ordinary-subagents",
+  "title": "A few ordinary subagents",
+  "kind": "mode",
+  "order": 20,
+  "summary": "The main conversation coordinates a few independent assignments.",
+  "useWhen": [
+    "A few small tasks have separate evidence or ownership.",
+    "Saving a script provides no useful reuse."
+  ],
+  "avoidWhen": [
+    "Many intermediate results overwhelm conversational coordination.",
+    "Assignments depend on shared mutable state."
+  ],
+  "contract": [
+    "Give each worker a self-contained brief and acceptance.",
+    "The main agent reconciles all assignments and integrates."
+  ],
+  "example": "Check two unrelated configuration files against their official documentation.",
+  "executor": "ordinary-subagents",
+  "configuration": {},
+  "diagram": "flowchart TD\n  M[Main agent] --> A[Config reader A]\n  M --> B[Config reader B]\n  A --> I[Main integration]\n  B --> I\n  I --> V[Acceptance]"
+}

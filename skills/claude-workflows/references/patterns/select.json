@@ -1,0 +1,28 @@
+{
+  "id": "select",
+  "title": "Select one proposal",
+  "kind": "terminal",
+  "order": 90,
+  "summary": "Retain one qualifying candidate intact.",
+  "useWhen": [
+    "One approach should own the final artifact.",
+    "A fixed rubric distinguishes viable options."
+  ],
+  "avoidWhen": [
+    "No candidate meets the acceptance criteria.",
+    "A new combined artifact is actually needed."
+  ],
+  "contract": [
+    "Fix the rubric before drafting.",
+    "Assess every candidate and criterion with evidence.",
+    "Select exactly one existing ID; all its rubric verdicts must pass.",
+    "Judge claims still require actual acceptance checks."
+  ],
+  "example": "Choose one API proposal that satisfies every fixed acceptance criterion.",
+  "executor": "agent-deployment",
+  "configuration": {
+    "pattern": "proposals",
+    "terminal": "select"
+  },
+  "diagram": "flowchart TD\n  A[Proposal A] --> J[Fixed rubric]\n  B[Proposal B] --> J\n  J --> S[One intact proposal]\n  S --> V[Acceptance]"
+}
