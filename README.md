@@ -1,5 +1,7 @@
 # Claude Workflows
 
+![Claude Code workflows: eight Clawd mascots wearing wizard, detective, construction, chef, graduation, cowboy, captain and crown hats.](assets/readme-banner.webp)
+
 Choose the simplest useful agent setup for your task, then run the option you select.
 
 **Preview:** offline checks pass; authenticated native workflow acceptance is still pending.
